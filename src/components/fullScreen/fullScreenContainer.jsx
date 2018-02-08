@@ -3,8 +3,8 @@ import { connectWithId } from 'react-jplayer-utils';
 import { setOption } from '../../actions/actions';
 import FullScreen from './fullScreen';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  fullScreen: jPlayers[id].fullScreen,
+const mapStateToProps = (_imState, { id }) => ({
+  fullScreen: _imState.get('jPlayers').toJS()[id].fullScreen,
 });
 
 const mapDispatchToProps = {

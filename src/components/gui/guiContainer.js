@@ -6,12 +6,12 @@ import GuiAnimation from './animation';
 
 const timeoutIds = [];
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  fullScreen: jPlayers[id].fullScreen,
-  paused: jPlayers[id].paused,
-  startGuiFadeOut: jPlayers[id].startGuiFadeOut,
-  guiFadeOut: jPlayers[id].guiFadeOut,
-  guiFadeHoldTime: jPlayers[id].guiFadeHoldTime,
+const mapStateToProps = (_imState, { id }) => ({
+  fullScreen: _imState.get('jPlayers').toJS()[id].fullScreen,
+  paused: _imState.get('jPlayers').toJS()[id].paused,
+  startGuiFadeOut: _imState.get('jPlayers').toJS()[id].startGuiFadeOut,
+  guiFadeOut: _imState.get('jPlayers').toJS()[id].guiFadeOut,
+  guiFadeHoldTime: _imState.get('jPlayers').toJS()[id].guiFadeHoldTime,
 });
 
 const handlers = {

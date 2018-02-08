@@ -4,8 +4,8 @@ import { compose, withHandlers } from 'recompose';
 import { setVolume } from '../../actions/actions';
 import VolumeBar from './volumeBar';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  verticalVolume: jPlayers[id].verticalVolume,
+const mapStateToProps = (_imState, { id }) => ({
+  verticalVolume: _imState.get('jPlayers').toJS()[id].verticalVolume,
 });
 
 const handlers = {

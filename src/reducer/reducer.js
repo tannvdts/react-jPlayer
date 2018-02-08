@@ -1,9 +1,11 @@
 import { limitValue } from 'react-jplayer-utils';
+import { fromJS } from 'immutable';
 
-import { initialState } from '../initializeOptions/initializeOptions';
+import { getInitialState } from '../initializeOptions/initializeOptions';
 import { actionNames, formats as supportedFormats, defaultStatus, defaultOptions } from '../util/constants';
 import urlNotSetError from '../util/errorHandlers/urlNotSetError';
 import noFormatSupportedError from '../util/errorHandlers/noFormatSupportedError';
+
 
 const updateFormats = (sources) => {
   const formats = [];
@@ -28,10 +30,10 @@ const updateFormats = (sources) => {
   return formats;
 };
 
-const clearMedia = () => ({
+const clearMedia = () => (fromJS({
   ...defaultStatus,
   media: defaultOptions.media,
-});
+}));
 
 const setMedia = (_, { media }) => {
   let video;
@@ -55,7 +57,7 @@ const setMedia = (_, { media }) => {
     );
   }
 
-  return {
+  return fromJS({
     ...clearMedia(),
     mediaSettings: {
       formats,
@@ -67,57 +69,57 @@ const setMedia = (_, { media }) => {
     src,
     paused: true,
     error,
-  };
+  });
 };
 
 const play = (jPlayer, { time }) => {
   if (jPlayer.src) {
-    return {
+    return fromJS({
       paused: false,
       newTime: !isNaN(time) ? time : null,
-    };
+    });
   }
 
-  return {
+  return fromJS({
     error: urlNotSetError(play.name),
-  };
+  });
 };
 
 const pause = (jPlayer, { time }) => {
   if (jPlayer.src) {
-    return {
+    return fromJS({
       paused: true,
       newTime: !isNaN(time) ? time : null,
-    };
+    });
   }
 
-  return {
+  return fromJS({
     error: urlNotSetError(pause.name),
-  };
+  });
 };
 
 const setPlayHead = (jPlayer, { percent }) => {
   const limitedPercent = limitValue(percent, 0, 100);
 
   if (jPlayer.src) {
-    return {
+    return fromJS({
       playHeadPercent: limitedPercent,
-    };
+    });
   }
 
-  return {
+  return fromJS({
     error: urlNotSetError(setPlayHead.name),
-  };
+  });
 };
 
-const setVolume = (_, { volume }) => ({
+const setVolume = (_, { volume }) => (fromJS({
   volume: limitValue(volume, 0, 1),
   muted: volume <= 0,
-});
+}));
 
-const setMute = (_, { mute }) => ({
+const setMute = (_, { mute }) => (fromJS({
   muted: mute,
-});
+}));
 
 const setOption = (jPlayer, { key, value }) => {
   switch (key) {
@@ -134,14 +136,14 @@ const setOption = (jPlayer, { key, value }) => {
     case 'muted':
       return setMute(jPlayer, { mute: value });
     default:
-      return {
+      return fromJS({
         [key]: value,
-      };
+      });
   }
 };
 
 const focus = (state, id) => {
-  const newState = { ...state };
+  const newState = state.toJS();
 
   if (newState[id].keyEnabled) {
     Object.keys(newState).forEach((key) => {
@@ -153,45 +155,47 @@ const focus = (state, id) => {
     });
   }
 
-  return newState;
+  return fromJS(newState);
 };
 
 const focusOnFirstKeyEnabledPlayer = (state) => {
-  const firstKeyEnabledPlayer = Object.keys(state).filter(key =>
-    state[key].keyEnabled,
+  const newState = state.toJS();
+  const firstKeyEnabledPlayer = Object.keys(newState).filter(key =>
+    newState[key].keyEnabled,
   ).shift();
 
-  if (state[firstKeyEnabledPlayer] !== undefined) {
+  if (newState[firstKeyEnabledPlayer] !== undefined) {
     const focusedPlayer = {
-      ...state[firstKeyEnabledPlayer],
+      ...newState[firstKeyEnabledPlayer],
       focused: true,
     };
 
-    return {
-      ...state,
+    return fromJS({
+      ...newState,
       [firstKeyEnabledPlayer]: focusedPlayer,
-    };
+    });
   }
 
-  return state;
+  return fromJS(newState);
 };
 
-const updateJPlayer = (state, action, fn) => {
+const updateJPlayer = (stateIm, action, fn) => {
+  const state = stateIm.toJS();
   const value = fn(state[action.id], action);
   const newState = state[action.id].keyEnabled ? focus(state, action.id) :
     focusOnFirstKeyEnabledPlayer(state);
   const jPlayer = newState[action.id];
 
-  return {
+  return fromJS({
     ...newState,
     [action.id]: {
       ...jPlayer,
       ...value,
     },
-  };
+  });
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = getInitialState(), action) => {
   const updateValue = fn => updateJPlayer(state, action, fn);
 
   switch (action.type) {

@@ -3,8 +3,8 @@ import { compose, withHandlers, lifecycle as setLifecycle } from 'recompose';
 
 import Bar from './bar';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  barDrag: jPlayers[id].barDrag,
+const mapStateToProps = (_imState, { id }) => ({
+  barDrag: _imState.get('jPlayers').toJS()[id].barDrag,
 });
 
 const handlers = () => {

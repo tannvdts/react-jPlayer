@@ -131,6 +131,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "immutable": "^3.8.2",
     "lodash.merge": "^4.6.0",
     "prop-types": "^15.5.8",
     "react": "^15.4.1",

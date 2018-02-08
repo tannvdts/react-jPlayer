@@ -6,10 +6,10 @@ import Events from './events';
 import urlNotSupportedError from '../../../util/errorHandlers/urlNotSupportedError';
 import { setOption, pause, play } from '../../../actions/actions';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  src: jPlayers[id].src,
-  pauseOthersOnPlay: jPlayers[id].pauseOthersOnPlay,
-  otherJPlayerIds: Object.keys(jPlayers).filter(key => key !== id),
+const mapStateToProps = (_imState, { id }) => ({
+  src: _imState.get('jPlayers').toJS()[id].src,
+  pauseOthersOnPlay: _imState.get('jPlayers').toJS()[id].pauseOthersOnPlay,
+  otherJPlayerIds: Object.keys(_imState.get('jPlayers').toJS()).filter(key => key !== id),
 });
 
 const contextTypes = {

@@ -4,19 +4,19 @@ import { compose, lifecycle as setLifecycle, withHandlers } from 'recompose';
 import Media from './media';
 import { setOption } from '../../actions/actions';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  loop: jPlayers[id].loop,
-  src: jPlayers[id].src,
-  playHeadPercent: jPlayers[id].playHeadPercent,
-  paused: jPlayers[id].paused,
-  defaultPlaybackRate: jPlayers[id].defaultPlaybackRate,
-  playbackRate: jPlayers[id].playbackRate,
-  preload: jPlayers[id].preload,
-  volume: jPlayers[id].volume,
-  muted: jPlayers[id].muted,
-  autoplay: jPlayers[id].autoplay,
-  newTime: jPlayers[id].newTime,
-  tracks: jPlayers[id].media.tracks,
+const mapStateToProps = (_imState, { id }) => ({
+  loop: _imState.get('jPlayers').toJS()[id].loop,
+  src: _imState.get('jPlayers').toJS()[id].src,
+  playHeadPercent: _imState.get('jPlayers').toJS()[id].playHeadPercent,
+  paused: _imState.get('jPlayers').toJS()[id].paused,
+  defaultPlaybackRate: _imState.get('jPlayers').toJS()[id].defaultPlaybackRate,
+  playbackRate: _imState.get('jPlayers').toJS()[id].playbackRate,
+  preload: _imState.get('jPlayers').toJS()[id].preload,
+  volume: _imState.get('jPlayers').toJS()[id].volume,
+  muted: _imState.get('jPlayers').toJS()[id].muted,
+  autoplay: _imState.get('jPlayers').toJS()[id].autoplay,
+  newTime: _imState.get('jPlayers').toJS()[id].newTime,
+  tracks: _imState.get('jPlayers').toJS()[id].media.tracks,
 });
 
 const handlers = () => {

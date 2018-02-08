@@ -3,10 +3,10 @@ import { compose, withHandlers, lifecycle as setLifecycle } from 'recompose';
 import { connectWithId } from 'react-jplayer-utils';
 import BufferBar from './bufferBar';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  bufferedTimeRanges: jPlayers[id].bufferedTimeRanges,
-  duration: jPlayers[id].duration,
-  bufferColour: jPlayers[id].bufferColour,
+const mapStateToProps = (_imState, { id }) => ({
+  bufferedTimeRanges: _imState.get('jPlayers').toJS()[id].bufferedTimeRanges,
+  duration: _imState.get('jPlayers').toJS()[id].duration,
+  bufferColour: _imState.get('jPlayers').toJS()[id].bufferColour,
 });
 
 const handlers = () => {

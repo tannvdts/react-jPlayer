@@ -1,12 +1,12 @@
-import merge from 'lodash.merge';
+import { fromJS } from 'immutable';
 
 import { defaultStatus, defaultOptions } from '../util/constants';
 
-export const initialState = {};
+let initialState = fromJS({});
+export const getInitialState = () => initialState;
 
 const options = (jPlayerOptions) => {
-  initialState[jPlayerOptions.id] = merge({}, defaultStatus,
-    defaultOptions, jPlayerOptions);
+  initialState = initialState.merge(defaultStatus).merge(defaultOptions).merge(jPlayerOptions);
 };
 
 export default options;

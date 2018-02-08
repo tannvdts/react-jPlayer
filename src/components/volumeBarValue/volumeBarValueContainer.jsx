@@ -1,10 +1,10 @@
 import { connectWithId } from 'react-jplayer-utils';
 import VolumeBarValue from './volumeBarValue';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  verticalVolume: jPlayers[id].verticalVolume,
-  muted: jPlayers[id].muted,
-  volume: jPlayers[id].volume,
+const mapStateToProps = (_imState, { id }) => ({
+  verticalVolume: _imState.get('jPlayers').toJS()[id].verticalVolume,
+  muted: _imState.get('jPlayers').toJS()[id].muted,
+  volume: _imState.get('jPlayers').toJS()[id].volume,
 });
 
 export default connectWithId(mapStateToProps)(VolumeBarValue);

@@ -3,11 +3,11 @@ import { compose, lifecycle as setLifecycle, withHandlers, renderNothing } from 
 
 import { setOption } from '../../../actions/actions';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  timeFormats: jPlayers[id].timeFormats,
-  currentTime: jPlayers[id].currentTime,
-  duration: jPlayers[id].duration,
-  showRemainingDuration: jPlayers[id].showRemainingDuration,
+const mapStateToProps = (_imState, { id }) => ({
+  timeFormats: _imState.get('jPlayers').toJS()[id].timeFormats,
+  currentTime: _imState.get('jPlayers').toJS()[id].currentTime,
+  duration: _imState.get('jPlayers').toJS()[id].duration,
+  showRemainingDuration: _imState.get('jPlayers').toJS()[id].showRemainingDuration,
 });
 
 const handlers = {

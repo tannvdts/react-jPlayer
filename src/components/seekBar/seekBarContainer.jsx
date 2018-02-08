@@ -4,8 +4,8 @@ import { connectWithId, getElementOffset } from 'react-jplayer-utils';
 import { setPlayHead } from '../../actions/actions';
 import SeekBar from './seekBar';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  seekPercent: jPlayers[id].seekPercent,
+const mapStateToProps = (_imState, { id }) => ({
+  seekPercent: _imState.get('jPlayers').toJS()[id].seekPercent,
 });
 
 const handlers = {

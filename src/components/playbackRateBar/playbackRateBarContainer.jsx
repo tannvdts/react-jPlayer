@@ -4,10 +4,10 @@ import { compose, withHandlers } from 'recompose';
 import { setOption } from '../../actions/actions';
 import PlaybackRateBar from './playbackRateBar';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  verticalPlaybackRate: jPlayers[id].verticalPlaybackRate,
-  minPlaybackRate: jPlayers[id].minPlaybackRate,
-  maxPlaybackRate: jPlayers[id].maxPlaybackRate,
+const mapStateToProps = (_imState, { id }) => ({
+  verticalPlaybackRate: _imState.get('jPlayers').toJS()[id].verticalPlaybackRate,
+  minPlaybackRate: _imState.get('jPlayers').toJS()[id].minPlaybackRate,
+  maxPlaybackRate: _imState.get('jPlayers').toJS()[id].maxPlaybackRate,
 });
 
 const handlers = {

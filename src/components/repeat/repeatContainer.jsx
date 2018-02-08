@@ -4,8 +4,8 @@ import { compose, withHandlers } from 'recompose';
 import { setOption } from '../../actions/actions';
 import Repeat from './repeat';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  loop: jPlayers[id].loop,
+const mapStateToProps = (_imState, { id }) => ({
+  loop: _imState.get('jPlayers').toJS()[id].loop,
 });
 
 const handlers = {

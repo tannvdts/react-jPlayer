@@ -3,8 +3,8 @@ import { connectWithId } from 'react-jplayer-utils';
 import { play, pause } from '../../actions/actions';
 import Play from './play';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  paused: jPlayers[id].paused,
+const mapStateToProps = (_imState, { id }) => ({
+  paused: _imState.get('jPlayers').toJS()[id].paused,
 });
 
 const mapDispatchToProps = dispatch => ({

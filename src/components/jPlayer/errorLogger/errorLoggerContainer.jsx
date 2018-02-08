@@ -2,8 +2,8 @@
 import { connectWithId } from 'react-jplayer-utils';
 import { compose, lifecycle, renderNothing } from 'recompose';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  error: jPlayers[id].error,
+const mapStateToProps = (_imState, { id }) => ({
+  error: _imState.get('jPlayers').toJS()[id].error,
 });
 
 const lifecycleFunctions = {

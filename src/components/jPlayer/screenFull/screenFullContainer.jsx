@@ -4,8 +4,8 @@ import { compose, lifecycle, withHandlers, renderNothing } from 'recompose';
 
 import { setOption } from '../../../actions/actions';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  fullScreen: jPlayers[id].fullScreen,
+const mapStateToProps = (_imState, { id }) => ({
+  fullScreen: _imState.get('jPlayers').toJS()[id].fullScreen,
 });
 
 const handlers = {

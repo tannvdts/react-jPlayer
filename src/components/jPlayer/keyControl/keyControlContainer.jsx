@@ -5,13 +5,13 @@ import merge from 'lodash.merge';
 import { setOption, play, pause, setMute, setVolume } from '../../../actions/actions';
 import { keyIgnoredElementNames } from '../../../util/constants';
 
-const mapStateToProps = ({ jPlayers }, { id }) => ({
-  paused: jPlayers[id].paused,
-  fullScreen: jPlayers[id].fullScreen,
-  muted: jPlayers[id].muted,
-  volume: jPlayers[id].volume,
-  keyEnabled: jPlayers[id].keyEnabled,
-  focused: jPlayers[id].focused,
+const mapStateToProps = (_imState, { id }) => ({
+  paused: _imState.get('jPlayers').toJS()[id].paused,
+  fullScreen: _imState.get('jPlayers').toJS()[id].fullScreen,
+  muted: _imState.get('jPlayers').toJS()[id].muted,
+  volume: _imState.get('jPlayers').toJS()[id].volume,
+  keyEnabled: _imState.get('jPlayers').toJS()[id].keyEnabled,
+  focused: _imState.get('jPlayers').toJS()[id].focused,
   id,
 });
 
